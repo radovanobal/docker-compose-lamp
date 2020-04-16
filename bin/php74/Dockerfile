@@ -42,6 +42,9 @@ RUN pecl install xdebug-2.8.0 && \
 RUN pecl install redis-5.1.1 && \
     docker-php-ext-enable redis
 
+# Install firebird
+RUN apt-get -y install firebird-dev libib-util
+
 # Other PHP7 Extensions
 
 RUN docker-php-ext-install pdo_mysql && \
@@ -53,7 +56,8 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install zip && \
     docker-php-ext-install -j$(nproc) intl && \
     docker-php-ext-install mbstring && \
-    docker-php-ext-install gettext
+    docker-php-ext-install gettext 	&& \
+    docker-php-ext-install pdo_firebird
 
 # Install Freetype 
 RUN apt-get -y update && \
