@@ -31,6 +31,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: 'phpmyadmin'
@@ -54,3 +55,25 @@ services:
     image: redis:latest
     ports:
       - "127.0.0.1:${HOST_MACHINE_REDIS_PORT}:6379"
+
+  # https://hub.docker.com/_/FIREBIRD
+  firebird:
+    env_file:
+      - .env
+    # Image name (optinally version)
+    # https://docs.docker.com/compose/compose-file/#image
+    image: jacobalberty/firebird:3.0.4
+    # Define restart policy
+    # https://docs.docker.com/compose/compose-file/#restart
+    restart: always
+    # Volumes definition
+    # Named volume, allows persisted data but without caring where locally it is stored
+    # https://nickjanetakis.com/blog/docker-tip-28-named-volumes-vs-path-based-volumes
+    volumes:
+      - ${FIREBIRD_DATA_DIR-./data/firebird}:/var/lib/firebird
+      - ${FIREBIRD_LOG_DIR-./logs/firebird}:/var/log/firebird
+    # Add environment variables
+    # https://docs.docker.com/compose/compose-file/#environment
+    environment:
+      ISC_PASSWORD : ${FIREBIRD_PASSWORD}
+
