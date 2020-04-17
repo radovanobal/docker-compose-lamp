@@ -59,6 +59,8 @@ services:
   # https://hub.docker.com/_/FIREBIRD
   firebird:
     container_name: 'firebird'
+    ports:
+      - "3050:3050"
     env_file:
       - .env
     # Image name (optinally version)
