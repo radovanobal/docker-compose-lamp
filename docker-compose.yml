@@ -71,10 +71,12 @@ services:
     # Named volume, allows persisted data but without caring where locally it is stored
     # https://nickjanetakis.com/blog/docker-tip-28-named-volumes-vs-path-based-volumes
     volumes:
-      - ${FIREBIRD_DATA_DIR-./data/firebird}:/var/lib/firebird
+      - ${FIREBIRD_DATA_DIR-./data/firebird}:/firebird/data
       - ${FIREBIRD_LOG_DIR-./logs/firebird}:/var/log/firebird
     # Add environment variables
     # https://docs.docker.com/compose/compose-file/#environment
     environment:
       ISC_PASSWORD : ${FIREBIRD_PASSWORD}
+      FIREBIRD_PASSWORD : ${FIREBIRD_PASSWORD}
+      FIREBIRD_USER: ${FIREBIRD_USER}
 

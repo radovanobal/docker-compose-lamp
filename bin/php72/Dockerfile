@@ -14,6 +14,10 @@ RUN apt-get -y upgrade
 # Install useful tools
 RUN apt-get -yq install apt-utils nano wget dialog
 
+# Install firebird
+RUN apt-get -y install firebird-dev libib-util
+
+
 # Install important libraries
 RUN apt-get -y install --fix-missing apt-utils build-essential git curl libcurl3 libcurl3-dev zip openssl
 
@@ -27,9 +31,6 @@ RUN docker-php-ext-enable xdebug
 # Install redis
 RUN pecl install redis-4.0.1
 RUN docker-php-ext-enable redis
-
-# Install firebird
-RUN apt-get -y install firebird-dev libib-util
 
 # Other PHP7 Extensions
 
@@ -56,6 +57,9 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN docker-php-ext-install -j$(nproc) gd
 
 RUN docker-php-ext-install pdo_firebird
+RUN docker-php-ext-install interbase
+RUN docker-php-ext-enable pdo_firebird
+RUN docker-php-ext-enable interbase
 
 # Enable apache modules
 RUN a2enmod rewrite headers

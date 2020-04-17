@@ -9,6 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update --fix-missing && \
     apt-get upgrade -y && \
     apt-get --no-install-recommends install -y apt-utils && \
+    apt-get -y install firebird-dev libib-util && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -40,7 +41,11 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install zip && \
     docker-php-ext-install -j$(nproc) intl && \
     docker-php-ext-install mbstring && \
-    docker-php-ext-install gettext
+    docker-php-ext-install gettext && \
+    docker-php-ext-install interbase && \
+    docker-php-ext-install pdo_firebird
+
+RUN docker-php-ext-enable pdo_firebird
 
 # Install Freetype 
 RUN apt-get -y update && \
