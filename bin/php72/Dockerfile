@@ -17,6 +17,9 @@ RUN apt-get -yq install apt-utils nano wget dialog
 # Install firebird
 RUN apt-get -y install firebird-dev libib-util
 
+# Soap
+RUN apt-get -y install libxml2 libxml2-dev
+
 
 # Install important libraries
 RUN apt-get -y install --fix-missing apt-utils build-essential git curl libcurl3 libcurl3-dev zip openssl
@@ -58,6 +61,8 @@ RUN docker-php-ext-install -j$(nproc) gd
 
 RUN docker-php-ext-install pdo_firebird
 RUN docker-php-ext-install interbase
+RUN docker-php-ext-install soap
+
 RUN docker-php-ext-enable pdo_firebird
 RUN docker-php-ext-enable interbase
 
